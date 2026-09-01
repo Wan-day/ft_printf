@@ -37,7 +37,7 @@ ssize_t	ft_find_arg(char *str, char *set)
 	while (str[i])
 	{
 		if (ft_strchr(set, str[i]) != NULL)
-			return (i);
+			return (i - 1);
 		i++;
 	}
 	return (-1);
