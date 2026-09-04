@@ -1,24 +1,29 @@
 #include "ft_printf.h"
 
-void	*ft_printf(char	*str, ...)
+int	ft_printf(char	*str, ...)
 {
 	va_list	args;
 	ssize_t	arg_index;
-	t_list	*str_arr;
-	char	*temp;
+	int		result;
 
-
-	arg_index = ft_find_arg(str, ARG_SET);
-	if (arg_index == -1)
+	result = 0;
+	if (!str)
+		return (-1);
+	va_start(args, str);
+	while (*str)
 	{
-		ft_putstr(str);
-		return ;
+		if (*str == '%')
+		{
+			if (ft_parse_arg(&str, &args, &result) == -1)
+				return (-1);
+		}
+		else
+		{
+			if (!ft_putchar(*str))
+				return (-1);
+			result++;
+		}
 	}
-	temp = ft_split(str, arg_index);
-	str_arr = ft_lstnew(temp);
-	va_start(argc, str);
-
-
-
-	va_end(argc);
+	va_end(args);
+	return (result);
 }
