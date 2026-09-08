@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_funcs.c                                   :+:      :+:    :+:   */
+/*   ft_print_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dboldino <dboldino@student.42prague.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/08 13:09:26 by dboldino          #+#    #+#             */
-/*   Updated: 2026/09/08 13:18:25 by dboldino         ###   ########.fr       */
+/*   Updated: 2026/09/08 15:06:11 by dboldino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	ft_putnbr(long nb)
 			return (-1);
 		len += temp_len;
 	}
-	if (ft_putchar(*num) == -1)
+	if (ft_putchar(num) == -1)
 		return (-1);
 	len += 1;
 	return (len);
@@ -72,23 +72,6 @@ int	ft_putnbr_hexa(unsigned long nbr, char up)
 	return (len);
 }
 
-int	ft_putptr(void *ptr)
-{
-	int	len;
-	int	temp_len;
-
-	len = 0;
-	temp_len = 0;
-	if (ft_putstr("0x") == -1)
-		return (-1);
-	len += 2;
-	temp_len = ft_putnbr_hexa((unsigned long)ptr, 'x');
-	if (temp_len == -1)
-		return (-1);
-	len += temp_len;
-	return (len);
-}
-
 int	ft_putstr(char *str1)
 {
 	int	len;
@@ -107,5 +90,30 @@ int	ft_putstr(char *str1)
 		len++;
 		str1++;
 	}
+	return (len);
+}
+
+int	ft_putptr(void *ptr)
+{
+	int	len;
+	int	temp_len;
+
+	len = 0;
+	temp_len = 0;
+	if (ptr == NULL)
+	{
+		temp_len = ft_putstr("(nil)");
+		if (temp_len == -1)
+			return (-1);
+		len += temp_len;
+		return (len);
+	}
+	if (ft_putstr("0x") == -1)
+		return (-1);
+	len += 2;
+	temp_len = ft_putnbr_hexa((unsigned long)ptr, 'x');
+	if (temp_len == -1)
+		return (-1);
+	len += temp_len;
 	return (len);
 }
